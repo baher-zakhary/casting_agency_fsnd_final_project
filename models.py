@@ -56,6 +56,32 @@ class Movie():
         self.title = title
         self.relase_date = relase_date
 
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'relase_date': self.relase_date
+        }
+
+    def format_long(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'relase_date': self.relase_date,
+            'actors': self.actors
+        }
+
 
 '''
 Actor
@@ -74,3 +100,31 @@ class Actor():
         self.name = name
         self.age = age
         self.gender = gender
+
+    def insert(self):
+        db.session.add(self)
+        db.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender
+        }
+
+    def format_long(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender,
+            'movies': self.movies
+        }
