@@ -1,4 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.pythonPath": "c:\\_projects\\Full_stack_nanodegree_projects\\casting_agency_fsnd_final_project\\env\\Scripts\\python.exe"
 }
