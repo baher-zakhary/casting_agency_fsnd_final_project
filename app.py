@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_migrate import Migrate
+from models import setup_db, Actor, Movie, Gender
 
 
 def create_app(test_config=None):
@@ -10,6 +12,8 @@ def create_app(test_config=None):
     '''
     app = Flask(__name__)
     CORS(app)
+    app, db = setup_db(app)
+    migrate = Migrate(app, db)
 
     '''
     Error handlers

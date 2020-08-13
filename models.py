@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, Date, SmallInteger, Enum, String
 import enum
 
 username = 'postgres'
-password = 0000
+password = '0000'
 database_name = 'castingAgencyDB'
 database_path = "postgres://{}:{}@{}/{}".format(username, password,
                                                 "localhost:5432",
@@ -15,19 +15,8 @@ db = SQLAlchemy()
 def setup_db(app, database_path=database_path):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.app = app
     db.init_app(app)
-    db.create_all()
-
-
-'''
-Gender Enum
-'''
-
-
-class Gender(enum.Enum):
-    male = 0,
-    female = 1
+    return (app, db)
 
 
 '''
@@ -44,11 +33,21 @@ actor_movie = db.Table('actor_movie',
 
 
 '''
+Gender Enum
+'''
+
+
+class Gender(enum.Enum):
+    male = 0,
+    female = 1
+
+
+'''
 Movie
 '''
 
 
-class Movie():
+class Movie(db.Model):
     id = Column(Integer, primary_key=True)
     relase_date = Column(Date, nullable=False)
 
@@ -88,7 +87,7 @@ Actor
 '''
 
 
-class Actor():
+class Actor(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     age = Column(SmallInteger, nullable=False)
