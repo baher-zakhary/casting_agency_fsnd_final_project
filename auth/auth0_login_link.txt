@@ -1,0 +1,4 @@
+https://{{YOUR_DOMAIN}}/authorize?audience={{API_IDENTIFIER}}&response_type=token&client_id={{YOUR_CLIENT_ID}}&redirect_uri={{YOUR_CALLBACK_URI}}
+
+
+https://baher.us.auth0.com/authorize?audience=api&response_type=token&client_id=bgeBH8lWDnNi7Xfzr8PXygx6Vb73N6bs&redirect_uri=https://127.0.0.1:8080/
