@@ -1,9 +1,11 @@
 import os
+import json
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_migrate import Migrate
 from models import setup_db, Actor, Movie, Gender
+from auth.auth import requires_auth
 
 
 def create_app(test_config=None):
@@ -14,6 +16,157 @@ def create_app(test_config=None):
     CORS(app)
     app, db = setup_db(app)
     migrate = Migrate(app, db)
+
+    '''
+    Endpoints
+    '''
+
+    @app.route('/api/actors', methods=['GET'])
+    @requires_auth('read:actor')
+    def get_actors(jwt):
+        actors = Actor.query.all()
+        return jsonify({
+            'success': True,
+            'result': [actor.format() for actor in actors]
+        })
+
+    @app.route('/api/movies', methods=['GET'])
+    @requires_auth('read:movie')
+    def get_movies(jwt):
+        movies = Movie.query.all()
+        return jsonify({
+            'success': True,
+            'result': [movie.format() for movie in movies]
+        })
+
+    @app.route('/api/actors/<int:actor_id>', methods=['DELETE'])
+    @requires_auth('delete:actor')
+    def delete_actor(jwt, actor_id):
+        actor = Actor.query.filter(Actor.id == actor_id).first()
+        if actor is None:
+            abort(404)
+        try:
+            actor.delete()
+        except Exception:
+            abort(500)
+        return jsonify({
+            'success': True,
+            'result': actor_id
+        })
+
+    @app.route('/api/movies/<int:movie_id>', methods=['DELETE'])
+    @requires_auth('delete:movie')
+    def delete_movie(jwt, movie_id):
+        movie = Movie.qurey.filter(Movie.id == movie_id).first()
+        if movie is None:
+            abort(404)
+        try:
+            movie.delete()
+        except Exception:
+            abort(500)
+        return jsonify({
+            'success': True,
+            'result': movie_id
+        })
+
+    @app.route('/api/actors', methods=['POST'])
+    @requires_auth('add:actor')
+    def add_actor(jwt):
+        body = request.get_json()
+        try:
+            name = body.get('name', None)
+            age = body.get('age', None)
+            gender = body.get('gender', None)
+            movies = json.dumps(body.get('movies', None))
+        except Exception:
+            abort(422)
+        if name is None or age is None or gender is None:
+            abort(400)
+        try:
+            new_actor = Actor(name=name, age=age, gender=gender, movies=movies)
+            new_actor.insert()
+        except Exception:
+            abort(422)
+        return jsonify({
+            'success': True,
+            'result': new_actor.format_long()
+        })
+
+    @app.route('/api/movies', methods=['POST'])
+    @requires_auth('add:movie')
+    def add_movie(jwt):
+        body = request.get_json()
+        try:
+            title = body.get('title', None)
+            release_date = body.get('release_date', None)
+            actors = json.dumps(body.get('actors', None))
+        except Exception:
+            abort(422)
+        if title is None or release_date is None:
+            abort(400)
+        try:
+            new_movie = Movie(title=title, release_date=release_date,
+                              actors=actors)
+            new_movie.insert()
+        except Exception:
+            abort(422)
+        return jsonify({
+            'success': True,
+            'result': new_movie.format_long()
+        })
+
+    @app.route('/api/actors/<int:actor_id>', methods=['PATCH'])
+    @requires_auth('update:actor')
+    def update_actor(jwt, actor_id):
+        actor = Actor.query.filter(Actor.id == actor_id).first()
+        if actor is None:
+            abort(404)
+        try:
+            body = request.get_json()
+            name = body.get('name', None)
+            if name is not None:
+                actor.name = name
+            age = body.get('age', None)
+            if age is not None:
+                actor.age = age
+            gender = body.get('gender', None)
+            if gender is not None:
+                actor.gender = gender
+            movies = json.dumps(body.get('movies', None))
+            if movies is not None:
+                actor.movies = movies
+            actor.update()
+        except Exception:
+            abort(422)
+        return jsonify({
+            'success': True,
+            'result': actor.format_long()
+        })
+
+    @app.route('/api/movies/<int:movie_id>', methods=['PATCH'])
+    @requires_auth('update:movie')
+    def update_movie(jwt, movie_id):
+        movie = Movie.query.filter(Movie.id == movie_id).first()
+        if movie is None:
+            abort(404)
+        try:
+            body = request.get_json()
+            title = body.get('title', None)
+            if title is not None:
+                movie.title = title
+            release_date = body.get('release_date', None)
+            if release_date is not None:
+                movie.release_date = release_date
+            actors = body.get('actors', None)
+            if actors is not None:
+                movie.actors = actors
+            movie.update()
+        except Exception:
+            abort(422)
+        return jsonify({
+            'success': True,
+            'result': movie.format_long()
+        })
 
     '''
     Error handlers
