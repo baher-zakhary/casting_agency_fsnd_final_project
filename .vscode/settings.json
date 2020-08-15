@@ -1,5 +1,7 @@
 {
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
-    "python.pythonPath": "c:\\_projects\\Full_stack_nanodegree_projects\\casting_agency_fsnd_final_project\\env\\Scripts\\python.exe"
+    "python.pythonPath": "c:\\_projects\\Full_stack_nanodegree_projects\\casting_agency_fsnd_final_project\\env\\Scripts\\python.exe",
+    "python.linting.flake8Enabled": false,
+    "python.linting.pycodestyleEnabled": true
 }
