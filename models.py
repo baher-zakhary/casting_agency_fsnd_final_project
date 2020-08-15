@@ -49,11 +49,12 @@ Movie
 
 class Movie(db.Model):
     id = Column(Integer, primary_key=True)
-    relase_date = Column(Date, nullable=False)
+    title = Column(String, nullable=False)
+    release_date = Column(Date, nullable=False)
 
-    def __init__(self, title, relase_date):
+    def __init__(self, title, release_date):
         self.title = title
-        self.relase_date = relase_date
+        self.release_date = release_date
 
     def insert(self):
         db.session.add(self)
@@ -70,14 +71,14 @@ class Movie(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'relase_date': self.relase_date
+            'release_date': self.release_date
         }
 
     def format_long(self):
         return {
             'id': self.id,
             'title': self.title,
-            'relase_date': self.relase_date,
+            'release_date': self.release_date,
             'actors': self.actors
         }
 
