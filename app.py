@@ -152,9 +152,27 @@ def create_app(test_config=None):
             gender = body.get('gender', None)
             if gender is not None:
                 actor.gender = gender
-            movies = json.dumps(body.get('movies', None))
+            movies = body.get('movies', None)
             if movies is not None:
-                actor.movies = movies
+                actor.movies = []
+                for movie in movies:
+                    title = movie.get('title')
+                    release_date = movie.get('release_date')
+                    if not title or not release_date:
+                        abort(422)
+                    movie_found = Movie.query.filter(
+                        and_(
+                            Movie.title == title,
+                            Movie.release_date == release_date
+                        )
+                    ).first()
+                    if movie_found is not None:
+                        actor.movies.append(movie_found)
+                    else:
+                        new_movie = Movie(
+                                title=title, release_date=release_date
+                            )
+                        actor.movies.append(new_movie)
             actor.update()
         except Exception:
             abort(422)
