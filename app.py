@@ -6,6 +6,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from models import setup_db, Actor, Movie, Gender
 from auth.auth import requires_auth
+from sqlalchemy import and_
 
 
 def create_app(test_config=None):
@@ -77,19 +78,38 @@ def create_app(test_config=None):
             name = body.get('name', None)
             age = body.get('age', None)
             gender = body.get('gender', None)
-            movies = json.dumps(body.get('movies', None))
+            movies = body.get('movies', None)
         except Exception:
             abort(422)
         if name is None or age is None or gender is None:
             abort(400)
         try:
-            new_actor = Actor(name=name, age=age, gender=gender, movies=movies)
+            new_actor = Actor(name=name, age=age, gender=gender)
+            if movies is not None:
+                new_actor.movies = []
+                for movie in movies:
+                    title = movie.get('title')
+                    release_date = movie.get('release_date')
+                    if not title or not release_date:
+                        abort(422)
+                    movie_found = Movie.query.filter(
+                        and_(
+                            Movie.title == title,
+                            Movie.release_date == release_date
+                            )
+                    ).first()
+                    if movie_found is None:
+                        new_movie = Movie(title=title,
+                                          release_date=release_date)
+                        new_actor.movies.append(new_movie)
+                    else:
+                        new_actor.movies.append(movie_found)
             new_actor.insert()
         except Exception:
             abort(422)
         return jsonify({
             'success': True,
-            'result': new_actor.format_long()
+            'result': [new_actor.format_long()]
         })
 
     @app.route('/api/movies', methods=['POST'])
@@ -112,7 +132,7 @@ def create_app(test_config=None):
             abort(422)
         return jsonify({
             'success': True,
-            'result': new_movie.format_long()
+            'result': [new_movie.format_long()]
         })
 
     @app.route('/api/actors/<int:actor_id>', methods=['PATCH'])
@@ -140,7 +160,7 @@ def create_app(test_config=None):
             abort(422)
         return jsonify({
             'success': True,
-            'result': actor.format_long()
+            'result': [actor.format_long()]
         })
 
     @app.route('/api/movies/<int:movie_id>', methods=['PATCH'])
@@ -165,7 +185,7 @@ def create_app(test_config=None):
             abort(422)
         return jsonify({
             'success': True,
-            'result': movie.format_long()
+            'result': [movie.format_long()]
         })
 
     '''

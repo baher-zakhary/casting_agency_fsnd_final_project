@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, Date, SmallInteger, Enum, String
 import enum
+import json
 
 username = 'postgres'
 password = '0000'
@@ -79,7 +80,7 @@ class Movie(db.Model):
             'id': self.id,
             'title': self.title,
             'release_date': self.release_date,
-            'actors': self.actors
+            'actors': self.actors.all()
         }
 
 
@@ -103,7 +104,7 @@ class Actor(db.Model):
 
     def insert(self):
         db.session.add(self)
-        db.commit()
+        db.session.commit()
 
     def update(self):
         db.session.commit()
@@ -117,7 +118,7 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender
+            'gender': self.gender.name,
         }
 
     def format_long(self):
@@ -125,6 +126,6 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender,
-            'movies': self.movies
+            'gender': self.gender.name,
+            'movies': [movie.format() for movie in self.movies.all()]
         }
