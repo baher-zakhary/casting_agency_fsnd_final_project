@@ -80,7 +80,7 @@ class Movie(db.Model):
             'id': self.id,
             'title': self.title,
             'release_date': self.release_date,
-            'actors': self.actors.all()
+            'actors': [actor.format() for actor in self.actors]
         }
 
 
