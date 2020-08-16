@@ -58,7 +58,7 @@ def create_app(test_config=None):
     @app.route('/api/movies/<int:movie_id>', methods=['DELETE'])
     @requires_auth('delete:movie')
     def delete_movie(jwt, movie_id):
-        movie = Movie.qurey.filter(Movie.id == movie_id).first()
+        movie = Movie.query.filter(Movie.id == movie_id).first()
         if movie is None:
             abort(404)
         try:
