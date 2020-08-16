@@ -216,7 +216,23 @@ def create_app(test_config=None):
                 movie.release_date = release_date
             actors = body.get('actors', None)
             if actors is not None:
-                movie.actors = actors
+                movie.actors = []
+                for actor in actors:
+                    name = actor.get('name')
+                    age = actor.get('age')
+                    gender = actor.get('gender')
+                    actor_found = Actor.query.filter(
+                        and_(
+                            Actor.name == name,
+                            Actor.age == age,
+                            Actor.gender == gender
+                        )
+                    ).first()
+                    if actor_found is not None:
+                        movie.actors.append(actor_found)
+                    else:
+                        new_actor = Actor(name=name, age=age, gender=gender)
+                        movie.actors.append(new_actor)
             movie.update()
         except Exception:
             abort(422)
