@@ -273,6 +273,249 @@ class CastingAgencyTest(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertFalse(data['success'])
 
+    def test_get_actors_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        response = self.client().get(
+            '/api/actors',
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(len(data['result']))
+
+    def test_get_actors_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        response = self.client().get(
+            '/api/actors',
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(len(data['result']))
+
+    def test_get_movies_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        response = self.client().get(
+            '/api/movies',
+            headers={'Authorization': token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertTrue(len(data['result']))
+
+    def test_get_movies_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        response = self.client().get(
+            '/api/movies',
+            headers={'Authorization': token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertTrue(len(data['result']))
+
+    def test_add_actor_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        new_actor = {
+            "name": "test actor",
+            "age": 23,
+            "gender": "male"
+        }
+        response = self.client().post(
+            '/api/actors',
+            headers={"Authorization": token},
+            json=new_actor
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_add_actor_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        new_actor = {
+            "name": "test actor",
+            "age": 23,
+            "gender": "male"
+        }
+        response = self.client().post(
+            '/api/actors',
+            headers={"Authorization": token},
+            json=new_actor
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.inserted_actor = Actor.query.filter(
+            Actor.id == data['result'][0]['id']
+        ).first()
+        self.assertEqual(self.inserted_actor.name, "test actor")
+        self.assertEqual(self.inserted_actor.age, 23)
+        self.assertEqual(self.inserted_actor.gender.name, "male")
+
+    def test_update_actor_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        actor_to_update = Actor.query.first()
+        actor_update = {
+            "name": "Actor updated test",
+            "age": 50,
+            "gender": "female"
+        }
+        response = self.client().patch(
+            '/api/actors/' + str(actor_to_update.id),
+            headers={"Authorization": token},
+            json=actor_update
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_update_actor_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        actor_to_update = Actor.query.first()
+        actor_update = {
+            "name": "Actor updated test",
+            "age": 50,
+            "gender": "female"
+        }
+        response = self.client().patch(
+            '/api/actors/' + str(actor_to_update.id),
+            headers={"Authorization": token},
+            json=actor_update
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.updated_actor = Actor.query.filter(
+            Actor.id == data['result'][0]['id']
+        ).first()
+        self.assertEqual(
+            self.updated_actor.name,
+            "Actor updated test"
+        )
+        self.assertEqual(self.updated_actor.age, 50)
+        self.assertEqual(self.updated_actor.gender.name, "female")
+
+    def test_delete_actor_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        actor_to_delete = Actor.query.first()
+        response = self.client().delete(
+            '/api/actors/' + str(actor_to_delete.id),
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_delete_actor_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        actor_to_delete = Actor.query.first()
+        response = self.client().delete(
+            '/api/actors/' + str(actor_to_delete.id),
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.deleted_actor = Actor.query.filter(
+            Actor.id == data['result']
+        ).first()
+        self.assertEqual(self.deleted_actor, None)
+
+    def test_add_movie_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        new_movie = {
+            "title": "movie new",
+            "release_date": "2020-08-16",
+        }
+        response = self.client().post(
+            '/api/movies',
+            headers={"Authorization": token},
+            json=new_movie
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_add_movie_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        new_movie = {
+            "title": "movie new",
+            "release_date": "2020-08-16",
+        }
+        response = self.client().post(
+            '/api/movies',
+            headers={"Authorization": token},
+            json=new_movie
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_update_movie_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        movie_to_update = Movie.query.first()
+        movie_update = {
+            "title": "movie updated",
+            "release_date": "2020-08-16",
+        }
+        response = self.client().patch(
+            '/api/movies/' + str(movie_to_update.id),
+            headers={"Authorization": token},
+            json=movie_update
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_update_movie_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        movie_to_update = Movie.query.first()
+        movie_update = {
+            "title": "movie updated",
+            "release_date": "2020-08-16",
+        }
+        response = self.client().patch(
+            '/api/movies/' + str(movie_to_update.id),
+            headers={"Authorization": token},
+            json=movie_update
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.updated_movie = Movie.query.filter(
+            Movie.id == data['result'][0]['id']
+        ).first()
+        self.assertEqual(
+            self.updated_movie.title,
+            "movie updated"
+        )
+        self.assertEqual(str(self.updated_movie.release_date), "2020-08-16")
+
+    def test_delete_movie_RBAC1(self):
+        token = self.get_token(RoleTokenEnum.casting_assistant_token.name)
+        movie_to_delete = Movie.query.first()
+        response = self.client().delete(
+            '/api/movies/' + str(movie_to_delete.id),
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
+    def test_delete_movie_RBAC2(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        movie_to_delete = Movie.query.first()
+        response = self.client().delete(
+            '/api/movies/' + str(movie_to_delete.id),
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(data['success'])
+
 
 if __name__ == "__main__":
     unittest.main()
