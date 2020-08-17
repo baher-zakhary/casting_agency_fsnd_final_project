@@ -4,11 +4,12 @@ import enum
 import json
 from flask_migrate import Migrate
 
-username = 'postgres'
-password = '0000'
+username = 'qbkxkslvzezfzr'
+password = 'feebf0bd4ecb9378888388029db5581855b2561b5ba77fc3b8ff14e175231987'
 database_name = 'casting_agency_DB'
+host = "ec2-54-211-210-149.compute-1.amazonaws.com"
 database_path = "postgres://{}:{}@{}/{}".format(username, password,
-                                                "localhost:5432",
+                                                host,
                                                 database_name)
 
 db = SQLAlchemy()

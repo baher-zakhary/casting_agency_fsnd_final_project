@@ -17,14 +17,15 @@ class CastingAgencyTest(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        self.username = "postgres"
-        self.password = "0000"
-        self.database_name = "casting_agency_testing_DB"
-        self.database_path = "postgres://{}:{}@{}/{}".format(
-            self.username,
-            self.password,
-            "localhost:5432",
-            self.database_name
+        self.username = 'qbkxkslvzezfzr'
+        self.password = \
+            'feebf0bd4ecb9378888388029db5581855b2561b5ba77fc3b8ff14e175231987'
+        self.database_name = 'casting_agency_DB'
+        self.host = "ec2-54-211-210-149.compute-1.amazonaws.com"
+        database_path = "postgres://{}:{}@{}/{}".format(
+            username, password,
+            host,
+            database_name
         )
 
         setup_db(self.app, self.database_path)
