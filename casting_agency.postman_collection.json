@@ -212,7 +212,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTFhMzQ3NjY4MzAwNjdlYTZiZmMiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc2MDE2NzksImV4cCI6MTU5NzY4ODA3OSwiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIl19.Q-7XrfIbMe-RdRIKwrQSyMb494bdY57xKfdf_bCi3swJNVrsDphD1gzz9uhi_quaNIxKCN3MSdLEOG8LfD9dbzaPXgxhY4c2dtejfRGfhTEScbHAMlnqspzVkyVDCSGdZAP9t2mWY5hqJNRnBsT_x4NoNTpeImIEN3_QS2aQCCg0id5BHzCoSNAV2q1Nuc4G5_rE-i2F2DqEGYQPyxURDPhYcUOnl6zc81NJufYrmrl45kcgzjiyKiF3R8jV1pmR3Vbz92dtHWttdrTHgM2bGonCOydyjfxAtmpMtwPLKd0a4SKJ01TC761969WkfzzsYLjCrIyylA7oXwD1MLeowg",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTFhMzQ3NjY4MzAwNjdlYTZiZmMiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc2ODg1NTUsImV4cCI6MTU5Nzc3NDk1NSwiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIl19.RgYsgjK3czgyALzB8wl2SOWFVWUuVZwIO1RaUb1DZ2Oy_sNg8bpK6tTwS6fm8Z6aNpw0fX8UPWjYaucjDTMoDd_w6SrPZANwaCt7NbD4gV-AfvB8vXfXwxAg-fIcRMKmk6g2nLWHOIMA1OaH5qV83i6sQSFlKjp0m-aJcCHAtLwBZxgewrBZp9EcAN5Cy-JYsQsbwFnijqdZ9szdWa_y3NiIhaFb3RkqAYG_yWJRZGCp7x21Gymi9jzKAKGpXThxpXu2C7aQPRU_aBd0Fi5KWvqHyL29GNCBhv-oU6IEgiBOp0eMOp3y5xVuYzHeZ_3XEXSZkYD8wX7dwyHMV5T7Tg",
 						"type": "string"
 					}
 				]
@@ -370,14 +370,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/{{API_IDENTIFIER}}/actors/45",
+									"raw": "{{HOST}}/{{API_IDENTIFIER}}/actors/43",
 									"host": [
 										"{{HOST}}"
 									],
 									"path": [
 										"{{API_IDENTIFIER}}",
 										"actors",
-										"45"
+										"43"
 									]
 								}
 							},
@@ -448,7 +448,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTJhNjQ3NjY4MzAwNjdlYTZjMTIiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc2MDE3MzQsImV4cCI6MTU5NzY4ODEzNCwiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIiwidXBkYXRlOmFjdG9yIiwidXBkYXRlOm1vdmllIl19.F277848wPZ1EuT0M7ipSVO-_KxnxX-_-Z4aV1t1Rgg9rVuSj9307tfJ_EqG7v4hYiHpPGQklsgegYBDNsfPjJ4WrD8yJ5b7eiZiSJl3vT0SWYULqGFs3mqE5Rnw0Acx7g_wHWldOX49fGeslgMQtNqo-nrNXD8jrVBzXM4zT-AFrR8FPPNOrqKbJFkFgasEvfyuhS2xMBraMdoWXdAkIOquOqqTcuKJei3R7bq0cruxkqZaXUXDX9j9bERC1J87mob_k7A2rIFvLUQzHqP_xqNK81RayXI-aniRHobOPxrRcu2oPVmwhrcQ0mBtm6LlKMwkuQ5FNkAZQmfDL7c9YFQ",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTJhNjQ3NjY4MzAwNjdlYTZjMTIiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc2ODg2MjMsImV4cCI6MTU5Nzc3NTAyMywiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIiwidXBkYXRlOmFjdG9yIiwidXBkYXRlOm1vdmllIl19.N1L3gW4CUaDGgosfybN32yulCHkv-jCkodn8yNFFNA1Uord-HTRRsYoMv_EDZDb3Yu9LEULEmVsl2KqxeaUZ8aH3qoC55Vnhi9xrpNTAufr0qFjEYreWbMm8cH5hDfaepBGBEj6NyJb6c-ygQeWaVVTZpSIn-_XPe5th7gTTJSHIweb9BRFK1j7tgF5rGcEQEIoyhsMjXNGV6lEleB081REpICGzdJ1dv_BgjzG0kbou1XVyM3lN31MpEZDwtfz9nghrMx-1NUNVBBIOwndtKYUqNdd0XI-xDpnhZ97AtVs9f02fbHAoUu0BujZ3GuE0KUN_vgkR_jFMv0xHdMS3XQ",
 						"type": "string"
 					}
 				]
@@ -684,7 +684,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTJkM2ExYjQxZjAwNjc4MTZjYmYiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc1OTk5NDAsImV4cCI6MTU5NzY4NjM0MCwiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImFkZDptb3ZpZSIsImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIiwidXBkYXRlOmFjdG9yIiwidXBkYXRlOm1vdmllIl19.Y0Bu4n_qgK-pNqdZ-KZxb8surRpnE8-kd7BOLTPl1Y98KYaihTwE4jYlFNfHkAMfQUCvIk__11f9ch9_0wrH_h11enW_TMITLZXand_I3_SnyLpxZOF5qjmCiOZ8NTCu_NWbxz6_w8YL6pyY3BxvmKYyxyiYxi4I-G3aBHfekpAipYiT4vy_jxg-NgbpaCNSM-8OOQB7dnPfTiwu38VJ8EDjOylvdkhWadTKzzy6L1oyKlVOIZpSeW6kXNqmgL_97NeOSMy7e4qzhMz0wO9gYaxMLQqNnbx1P7MQIVzYvJpK_wzrmgGG7FjzMA1CCAPtsG5PlsthRlV_yCyEgBlPrw",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5raHc2aEVVczIwWGNPRFBHT2RWSCJ9.eyJpc3MiOiJodHRwczovL2JhaGVyLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjM1YTJkM2ExYjQxZjAwNjc4MTZjYmYiLCJhdWQiOiJhcGkiLCJpYXQiOjE1OTc2ODg2OTUsImV4cCI6MTU5Nzc3NTA5NSwiYXpwIjoiYmdlQkg4bFdEbk5pN1hmenI4UFh5Z3g2VmI3M042YnMiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImFkZDptb3ZpZSIsImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsInJlYWQ6YWN0b3IiLCJyZWFkOm1vdmllIiwidXBkYXRlOmFjdG9yIiwidXBkYXRlOm1vdmllIl19.GSPf-5mM4MksQtWpXOLSVp8t2CoWWwh-YEHlFpAdUvo6V-v4b3ZvHun9rMEm2KljahR6uQ1tI8ESLV5TnUTLa2TJ_hVd2MFUUG6D9S471_HdsqNIN3q8uOdv85ZdDD32QFR8nyMg04jA3xCU35GT2M1EkBl2AIz_7IbLBMGRAgMVwUxSqcYvSB-bR8rh_cOtCO67ZiM9I7ZtL0U6hgZuiJ1_wVo-SorwU_mD0-j_Y2goswbR7b1gJoc6Vb9qSsSZqarnr92nPxxxQ_us_vb3twrc7qLRBj5wi7tSuWjQ_fRwgbH_fVQrlJFtZgPRDOp8L4HyPhB66oEvOLhJY0ZTVg",
 						"type": "string"
 					}
 				]
@@ -738,12 +738,12 @@
 	],
 	"variable": [
 		{
-			"id": "fe9e2c0e-d53e-4807-871f-43b56c6bf0e6",
+			"id": "e6a7093c-d8bb-4961-996f-10482797157d",
 			"key": "HOST",
 			"value": "localhost:8080"
 		},
 		{
-			"id": "16ec47c5-926e-43d7-90d0-73067304372d",
+			"id": "d13ad04b-ada8-4b79-80c9-6ebf50c83bc3",
 			"key": "API_IDENTIFIER",
 			"value": "api"
 		}
