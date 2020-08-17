@@ -57,6 +57,9 @@ The Casting Agency models a company that is responsible for creating movies and 
 	```
 	python test_app.py
 	```
+**Note:** In `/testing_tokens` you will find files that contain tokens used by tests, tokens where set to expire after maximum possible period allowed by Auth0 which is 24hrs, if they expired you need to go to `/auth/test_users_credentials.txt`
+where you will find the login link and the credentials to three users of our three roles.
+You need to login with each user and renew the tokens stored in 	`/testing_tokens` for the test to run successfully
 	
 
 ### API Documentation:
