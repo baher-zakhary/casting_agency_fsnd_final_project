@@ -128,11 +128,6 @@ class CastingAgencyTest(unittest.TestCase):
         ).first()
         self.assertEqual(self.deleted_actor, None)
 
-    # ------------------------------------------------------------
-    # ------------------------------------------------------------
-    # ------------------------------------------------------------
-    # ------------------------------------------------------------
-
     def test_add_movie_success(self):
         token = self.get_token(RoleTokenEnum.executive_producer_token.name)
         new_movie = {
@@ -191,6 +186,92 @@ class CastingAgencyTest(unittest.TestCase):
             Movie.id == data['result']
         ).first()
         self.assertEqual(self.deleted_movie, None)
+
+    def test_get_actors_error(self):
+        response = self.client().get(
+            '/api/actors'
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    def test_get_movies_error(self):
+        response = self.client().get(
+            '/api/movies',
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    def test_add_actor_error(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        new_actor = {
+            "nam": "test actor",
+        }
+        response = self.client().post(
+            '/api/actors',
+            headers={"Authorization": token},
+            json=new_actor
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(data['success'])
+
+    def test_update_actor_error(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        actor_to_update = Actor.query.first()
+        response = self.client().patch(
+            '/api/actors/' + str(actor_to_update.id),
+            headers={"Authorization": token},
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+
+    def test_delete_actor_error(self):
+        token = self.get_token(RoleTokenEnum.casting_director_token.name)
+        response = self.client().delete(
+            '/api/actors/-1',
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
+
+    def test_add_movie_error(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        new_movie = {
+            "titl": "movie new"
+        }
+        response = self.client().post(
+            '/api/movies',
+            headers={"Authorization": token},
+            json=new_movie
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+
+    def test_update_movie_error(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        movie_to_update = Movie.query.first()
+        response = self.client().patch(
+            '/api/movies/' + str(movie_to_update.id),
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(data['success'])
+
+    def test_delete_movie_error(self):
+        token = self.get_token(RoleTokenEnum.executive_producer_token.name)
+        response = self.client().delete(
+            '/api/movies/-1',
+            headers={"Authorization": token}
+        )
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(data['success'])
 
 
 if __name__ == "__main__":
