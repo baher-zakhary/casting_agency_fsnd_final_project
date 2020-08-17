@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, Date, SmallInteger, Enum, String
 import enum
 import json
+from flask_migrate import Migrate
 
 username = 'postgres'
 password = '0000'
@@ -16,8 +17,10 @@ db = SQLAlchemy()
 def setup_db(app, database_path=database_path):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.app = app
     db.init_app(app)
-    return (app, db)
+    db.create_all()
+    # migrate = Migrate(app, db)
 
 
 '''
