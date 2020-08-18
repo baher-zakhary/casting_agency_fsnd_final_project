@@ -22,6 +22,8 @@ The Casting Agency models a company that is responsible for creating movies and 
 	# quit psql shell
 	\q
 	```
+- In models.py fill in database connection attributes
+
 - Restore tables & mock data
 	```bash
 	psql -U <username> casting_agency_DB < casting_agency_db.psql
