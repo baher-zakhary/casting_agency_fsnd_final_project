@@ -314,4 +314,4 @@ def create_app(test_config=None):
 APP = create_app()
 
 if __name__ == '__main__':
-    APP.run(host="ec2-54-211-210-149.compute-1.amazonaws.com")
+    APP.run(host='0.0.0.0', port=8080, debug=True)
